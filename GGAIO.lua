@@ -397,9 +397,9 @@ if Champion == nil and myHero.charName == 'Twitch' then
                     local basedmg = 10 + (elvl * 10)
                     local perstack = (10 + (5 * elvl)) * ecount
                     local bonusAD = myHero.bonusDamage * 0.35 * ecount
-                    local bonusAP = myHero.ap * 0.333 * ecount
-                    local edmg = basedmg + perstack + bonusAD + bonusAP
-                    if GG_Damage:CalculateDamage(myHero, hero, DAMAGE_TYPE_PHYSICAL, edmg) >= hero.health + (1.5 * hero.hpRegen) then
+                    local physdmg = GG_Damage:CalculateDamage(myHero, hero, DAMAGE_TYPE_PHYSICAL, basedmg + perstack + bonusAD)
+                    local magicdmg = GG_Damage:CalculateDamage(myHero, hero, DAMAGE_TYPE_MAGICAL, myHero.ap * 0.333 * ecount)
+                    if physdmg + magicdmg >= hero.health + (1.5 * hero.hpRegen) then
                         Utils:Cast(HK_E)
                         break
                     end
