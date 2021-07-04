@@ -1223,6 +1223,11 @@ do
         if args.RawMagical > 0 then
             args.CalculatedMagical = args.CalculatedMagical + self:CalculateDamage(from, target, DAMAGE_TYPE_MAGICAL, args.RawMagical, false, args.DamageType == DAMAGE_TYPE_MAGICAL)
         end
+        if args.TargetIsMinion and args.Target.maxHealth > 6 then
+            if Item:HasItem(from, 1054) or Item:HasItem(from, 1056) or Item:HasItem(from, 3070) then -- extra minion damage from tear or doran items 
+                args.CalculatedPhysical = args.CalculatedPhysical + 5
+            end
+        end
         local percentMod = 1
         if args.From.critChance - 1 == 0 or args.CriticalStrike then
             percentMod = percentMod * self:GetCriticalStrikePercent(args.From)
